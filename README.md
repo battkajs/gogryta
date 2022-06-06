@@ -3,12 +3,14 @@
 > To stir the pot
 
 ```
-./gogryta -h
+$ ./gogryta -h
+Usage of ./gogryta:                                                                                                                                                                                                                                                                                                  ─╯
   -case string
-        lower or upper (default "mix")
+        lower, upper or mix (default "lower")
   -exact
         for exact character count
   -len int
-        lengt of returned password (default 15)
+        minimum length on retured word (default 16)
+
 
 ```
