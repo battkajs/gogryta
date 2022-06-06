@@ -20,13 +20,13 @@ func main() {
 	var length int
 	var exact bool
 
-	flag.IntVar(&length, "len", 15, "lengt of returned password")
-	flag.StringVar(&capsFlag, "case", "mix", "lower or upper")
-	flag.BoolVar(&exact, "exact", false, "asdas")
+	flag.IntVar(&length, "len", 16, "minimum length on retured word")
+	flag.StringVar(&capsFlag, "case", "lower", "lower, upper or mix")
+	flag.BoolVar(&exact, "exact", false, "for exact character count")
 
 	flag.Parse()
 	if length < 0 {
-		log.Fatalln("'-l'  must  be >= 0")
+		log.Fatalln("'-l'  must  be > 0")
 	}
 
 	stdIn, err := os.Stdin.Stat()
@@ -46,17 +46,19 @@ func main() {
 	if exact == false {
 		for i := 0; i < length; i = len(klisterOrd) {
 			wordSlice = append(wordSlice, wordGenerator(ordlista))
-			fmt.Printf("wordslice: %s\n", wordSlice)
 			klisterOrd = strings.Join(wordSlice, "")
 		}
 	} else {
-		wordSlice = append(wordSlice, wordGenerator(ordlista))
-		if len(wordSlice[0]) < length - 1 {
-			klisterOrd = growTrim(wordSlice, length)
-		} else {
-			wordSlice = append(wordSlice)
-			klisterOrd = growTrim(wordSlice, length)
+		var tmp []string
+		for i := 0; i <= length; i = len(tmp) {
+			for _, key := range wordGenerator(ordlista) {
+				tmp = append(tmp, string(key))
+			}
 		}
+		for j := 0; j < length; j++ {
+			wordSlice = append(wordSlice, tmp[j])
+		}
+		klisterOrd = strings.Join(wordSlice, "")
 	}
 
 	switch capsFlag {
@@ -134,13 +136,6 @@ func capsMixer(word string) string {
 		rUpper := strings.ToUpper(wordByte[rIntIndex])
 		wordByte[rIntIndex] = rUpper
 		word = strings.Join(wordByte, "")
-	}
-	return word
-}
-func growTrim(list []string, length int) string {
-	rand.Seed(time.Now().UnixNano())
-	if len(list[0]) <= length {
-		for i := 0; 
 	}
 	return word
 }
