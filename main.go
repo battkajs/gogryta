@@ -98,7 +98,7 @@ func sanitizeWords(sani string) string {
 		wordSlice[randomNumber] = strings.ToUpper(wordSlice[randomNumber])
 	}
 
-	reg := regexp.MustCompile("^[[:ascii:]]+$")
+	reg := regexp.MustCompile("^[[:alnum:]]+$")
 	if reg.MatchString(sani) == false {
 		for index, letter := range wordSlice {
 			if reg.MatchString(letter) == false {
